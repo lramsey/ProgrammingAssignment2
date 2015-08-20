@@ -5,8 +5,10 @@
 
 ## contains three helper methods for the input matrix
 ## a getMatrix method to retrieve the matrix
-## a getInverse method to retrieve the cached matrix value in the makeCacheMatrix environment.  if matrix not cached, returns null
-## a cacheInverse method to store the inverse of the input matrix in the cache variable
+## a getInverse method to retrieve the cached matrix value in the makeCacheMatrix environment.
+## if matrix not cached, returns null
+## a solveAndCacheInverse method to solve for the inverse of the input matrix
+## and then set the inverse of the input matrix in the cache variable
 
 makeCacheMatrix <- function(x = matrix()) {
 
@@ -20,11 +22,11 @@ makeCacheMatrix <- function(x = matrix()) {
                 inverse
         }
 
-        cacheInverse <- function() {
+        solveAndCacheInverse <- function() {
                 inverse <<- solve(x)
         }
 
-        list( getMatrix = getMatrix, getInverse = getInverse, cacheInverse = cacheInverse )
+        list( getMatrix = getMatrix, getInverse = getInverse, solveAndCacheInverse = solveAndCacheInverse )
 }
 
 
@@ -32,7 +34,8 @@ makeCacheMatrix <- function(x = matrix()) {
 
 ## call cache matrix getInverse method
 
-## if return value is null, call the cacheInverse method to set inverse variable in makeCacheMatrix environment and output that variable
+## if return value is null, call the solveAndCacheInverse method
+## this method sets the inverse variable in makeCacheMatrix environment and return inverse
 
 ## return inverse
 
@@ -41,7 +44,7 @@ cacheSolve <- function(x, ...) {
         inverse <- x$getInverse()
 
         if( is.null( inverse ) ) {
-                inverse <- x$cacheInverse()
+                inverse <- x$solveAndCacheInverse()
         }
 
         inverse
